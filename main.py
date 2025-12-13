@@ -4,19 +4,50 @@
 # It echoes any incoming text messages.
 
 import telebot
+from telebot import types
 
-API_TOKEN = '8433567433:AAH9bDuB8tEmiQiZIJfkEN3_qI_RmvhoJEo'
-
-bot = telebot.TeleBot(API_TOKEN)
+import config
 
 
-# Handle '/start' and '/help'
+bot = telebot.TeleBot(config.API_TOKEN)
+
+def create_kb(buttons):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    for i in range(0, len(buttons), 2):
+        keyboard.add(*buttons[i:i + 2])
+    return keyboard
+
+def main_kb():
+    return create_kb([
+        types.KeyboardButton('/catalog'),
+        types.KeyboardButton('/basket')
+    ])
+
+
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
-    bot.reply_to(message, """\
-Hi there, I am EchoBot.
-I am here to echo your kind words back to you. Just say anything nice and I'll say the exact same thing to you!\
-""")
+    bot.reply_to(
+        message,
+        "Приветсвую я бот помощник. Помогу тебе сделать заказ в нашем магазине.\n/catalog - каталог товаров где можно собрать корзину для заказа.\n/basket - корзина с выбранными товарами на которую можно оформить заказ",
+        reply_markup=main_kb()
+
+    )
+
+
+
+@bot.message_handler(commands=["catalog"])
+def catalog(message):
+    bot.reply_to(message, "Добро пожаловать в каталог.")
+
+
+
+@bot.message_handler(commands=['basket'])
+def basket(message):
+    bot.reply_to(message, "Ваша корзина.")
+
+
+
+
 
 
 # Handle all other messages with content_type 'text' (content_types defaults to ['text'])
