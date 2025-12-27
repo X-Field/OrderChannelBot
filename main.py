@@ -1,8 +1,3 @@
-#!/usr/bin/python
-
-# This is a simple echo bot using the decorator mechanism.
-# It echoes any incoming text messages.
-
 import telebot
 from telebot import types
 
@@ -16,6 +11,7 @@ def create_kb(buttons):
     for i in range(0, len(buttons), 2):
         keyboard.add(*buttons[i:i + 2])
     return keyboard
+
 
 def main_kb():
     return create_kb([
@@ -34,11 +30,9 @@ def send_welcome(message):
     )
 
 
-
 @bot.message_handler(commands=["catalog"])
 def catalog(message):
     bot.reply_to(message, "Добро пожаловать в каталог.")
-
 
 
 @bot.message_handler(commands=['basket'])
@@ -46,11 +40,6 @@ def basket(message):
     bot.reply_to(message, "Ваша корзина.")
 
 
-
-
-
-
-# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
     bot.reply_to(message, message.text)
