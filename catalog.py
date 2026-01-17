@@ -24,9 +24,3 @@ def filter_catalog(filter_dict: dict[str, str], catalog: list[list[str]]) -> lis
     final_catalog = list(result)
     final_catalog.insert(0, headers)
     return final_catalog
-
-
-if __name__ == "__main__":
-    catalog = load_catalog()
-    filtred_data = filter_catalog({"Цвет товара": "Синий"}, catalog)
-    print(filtred_data[0])
