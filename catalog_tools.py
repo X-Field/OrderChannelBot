@@ -13,14 +13,14 @@ def get_categories(chapter_header_name:str, catalog: list[list[str]]) -> list[st
 
 
 def get_all_up_categories(catalog: list[list[str]]) -> list[str]:
-    return get_categories(UP_CHAPTER_HEADER_NAME, catalog)
+    return list(set(get_categories(UP_CHAPTER_HEADER_NAME, catalog)))
 
 
 
 def get_all_down_categories(up_chapter_name, catalog: list[list[str]]) -> list[str]:
     filter_dict = {UP_CHAPTER_HEADER_NAME: up_chapter_name}
     new_catalog = filter_catalog(filter_dict=filter_dict, catalog=catalog)
-    return get_categories(DOWN_CHAPTER_HEADER_NAME, new_catalog)
+    return list(set(get_categories(DOWN_CHAPTER_HEADER_NAME, new_catalog)))
 
 
 def get_products(up_chapter_name:str, down_chapter_name:str, catalog:list[list[str]]) -> list[tuple[str, str]]:
